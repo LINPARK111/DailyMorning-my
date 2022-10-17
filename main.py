@@ -166,6 +166,10 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
                 "value": love_days,
                 "color": get_color()
             },
+            "words": {
+                "value": get_words(),
+                "color": get_color()
+            },
             "note_en": {
                 "value": note_en,
                 "color": get_color()
@@ -223,8 +227,6 @@ if __name__ == "__main__":
     # 传入省份和市获取天气信息
     province, city = config["province"], config["city"]
     weather, max_temperature, min_temperature = get_weather(province, city)
-    #情话
-    words = get_words()
     # 获取词霸每日金句
     note_ch, note_en = get_ciba()
     # 公众号推送消息

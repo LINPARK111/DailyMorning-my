@@ -7,6 +7,11 @@ from zhdate import ZhDate
 import sys
 import os
 
+def get_words():
+  words = requests.get("https://api.shadiao.pro/chp")
+  if words.status_code != 200:
+    return get_words()
+  return words.json()['data']['text']
 
 def get_color():
     # 获取随机颜色
@@ -218,9 +223,11 @@ if __name__ == "__main__":
     # 传入省份和市获取天气信息
     province, city = config["province"], config["city"]
     weather, max_temperature, min_temperature = get_weather(province, city)
+    #情话
+    words = get_words()
     # 获取词霸每日金句
     note_ch, note_en = get_ciba()
     # 公众号推送消息
     for user in users:
-        send_message(user, accessToken, city, weather, max_temperature, min_temperature, note_ch, note_en)
+        send_message(user, accessToken, city, weather, max_temperature, min_temperature, words, note_ch, note_en)
     os.system("pause")
